@@ -1,0 +1,1 @@
+Depende do tamanho do problema. Não seria muito prático caso não houvesse limites para o tamanho. Em resumo, polinômios de ordem superior não são práticos, somente quando as entradas são pequenas.

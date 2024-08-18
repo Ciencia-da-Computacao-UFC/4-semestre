@@ -1,0 +1,1 @@
+Depende do tamanho do problema. Não seria muit prático caso não houvessem limites para o tamanho. Também, poedm ter áreas onde a diferença entre O(n²) e O(n³) são importantes até para polinômios de baixa ordem. Em resumo, polinômios de ordem superior não são práticos, exceto quando as entradas são bem pequenas. 
