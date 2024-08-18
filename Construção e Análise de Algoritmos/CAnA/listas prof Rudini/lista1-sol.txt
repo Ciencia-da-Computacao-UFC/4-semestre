@@ -1,0 +1,647 @@
+#include <iostream>
+#include <fstream>
+#include <cmath>
+#include <ctime>
+#include <climits>
+#include <windows.h>
+using namespace std;
+
+// ---------------------------------
+// QUESTOES (algoritmos principais)
+// ---------------------------------
+void Questao4(int N);
+void Questao6(int N);
+void Questao7(int N);
+int Questao9(int* vetor, int p, int r);
+int Questao10(int* vetor1, int* vetor2, int p1, int r1, int p2, int r2);
+void Questao11(int* vetor, int n, int x);
+int Questao12(int* vetor, int p, int r);
+void Questao14a(int* vetor, int n, int k);
+void Questao14b(int* vetor, int n, int k);
+int Questao16(int* vetor, int N, double prob);
+void Questao17(double* vetor, int N, int K, double relax);
+
+
+// ----------------------
+// algoritmos auxiliares
+// ----------------------
+void HeapSort(int* vetor, int p, int r);
+void InsertionSort(int* vetor, int p, int r);
+void CountingSort(double* A, int N, int K);
+int Busca_Binaria(int* vetor, int elemento, int p, int r);
+int Selecao(int* A, int p, int r, int k);
+void imprimir_vetor(int* vetor, int N, string filename);
+void imprimir_vetor2(double* vetor, int N, string filename);
+
+int intQuestao4;
+
+
+
+
+// -------------------------------------------------------------
+// --- MAIN ----------------------------------------------------
+// -------------------------------------------------------------
+int main() {
+
+	int i,N;
+
+	cout<<"-------------------------------------------------------------\n";
+	cout<<"---------------- QUESTAO 4 ----------------------------------\n";
+	cout<<"-------------------------------------------------------------\n";
+	ofstream arq;
+	arq<<fixed;
+	arq.open("saida_questao4.txt");
+    arq<<"N\tT(N)\tN*log(N,10)\tN*log(N,6)\tN*log(N,5)"<<endl;
+
+	cout<<endl;
+	for (int i=10000; i<=3000000; i+=10000) {
+	    intQuestao4 = 0;
+	    Questao4(i);
+	    arq<<i<<"\t"<<intQuestao4<<"\t"<<(int)(i*log(i)/log(10))<<"\t"<<(int)(i*log(i)/log(6))<<"\t"<<(int)(i*log(i)/log(5))<<"\t"<<endl;
+	}
+	arq.close();
+	cout << "<Questao4> Ok: ver arquivo saida_questao4.txt" << endl;
+
+
+	cout<<"-------------------------------------------------------------\n";
+	cout<<"---------------- QUESTAO 6 ----------------------------------\n";
+	cout<<"-------------------------------------------------------------\n";
+
+	Questao6(20); //par
+	Questao6(21); //impar
+
+	cout<<"-------------------------------------------------------------\n";
+	cout<<"---------------- QUESTAO 7 ----------------------------------\n";
+	cout<<"-------------------------------------------------------------\n";
+
+	Questao7(50);
+
+	cout<<"-------------------------------------------------------------\n";
+	cout<<"---------------- QUESTAO 9 ----------------------------------\n";
+	cout<<"-------------------------------------------------------------\n";
+	cout<<endl;
+	N = 1001; //N=1000;
+	int* vetor9 = new int [N];
+	for (i=0; i<N; i++) vetor9[i] = 11 + i%2;
+	int maj = Questao9(vetor9,0,N-1);
+	if (maj<0) cout<<"<Questao9> NAO tem majoritario"<<endl;
+	else cout<<"<Questao9> Tem majoritario = "<<maj<<endl;
+	delete [] vetor9;
+
+
+
+	cout<<"-------------------------------------------------------------\n";
+	cout<<"---------------- QUESTAO 10 ---------------------------------\n";
+	cout<<"-------------------------------------------------------------\n";
+	cout<<endl;
+	N = 16;
+	int* vetor10a = new int [N];
+	int* vetor10b = new int [N];
+	for (i=0; i<N; i++) vetor10a[i] = i;
+	for (i=0; i<N; i++) vetor10b[i] = 2*i;
+	//HeapSort(vetor10a,0,N-1); HeapSort(vetor10b,0,N-1);
+	imprimir_vetor(vetor10a, N, "entrada_questao10a.txt");
+	imprimir_vetor(vetor10b, N, "entrada_questao10b.txt");
+
+	int med = Questao10(vetor10a,vetor10b,0,N-1,0,N-1);
+	cout<<"<Questao10> Mediana de X1 e X2 ordenados: = "<<med<<endl;
+
+
+
+	cout<<"-------------------------------------------------------------\n";
+	cout<<"---------------- QUESTAO 11 ---------------------------------\n";
+	cout<<"-------------------------------------------------------------\n";
+	cout<<endl;
+	N = 250000;
+	int* vetor11 = new int [N];
+	for (i=0; i<N; i++) vetor11[i] = 0;
+	vetor11[10000] = 4999;
+	vetor11[20000] = 5001;
+	Questao11(vetor11, N, 10000);
+	Questao11(vetor11, N, 10001);
+	delete [] vetor11;
+
+
+	cout<<"-------------------------------------------------------------\n";
+	cout<<"---------------- QUESTAO 12 ----------------------------------\n";
+	cout<<"-------------------------------------------------------------\n";
+	cout<<endl;
+	N = 1000;
+	int* vetor12 = new int [N];
+	for (i=0; i<N; i++) if (i%2==0) vetor12[i] = i; else vetor12[i]=i-2;
+
+	int inv = Questao12(vetor12,0,N-1);
+	cout<<"<Questao12> Numero de inversoes = "<<inv<<endl;
+	delete [] vetor12;
+
+
+	cout<<"-------------------------------------------------------------\n";
+	cout<<"---------------- QUESTAO 14 ----------------------------------\n";
+	cout<<"-------------------------------------------------------------\n";
+	cout<<endl;
+	int k = 256;
+	N = 8000;
+	int* vetor14 = new int [k*N];
+	srand(time(NULL));
+	for (i=0; i<k*N; i++) vetor14[i] = rand() % 100000;
+	for (i=0; i<k; i++) {
+        HeapSort(vetor14, i*N, i*N + N-1);
+	}
+	imprimir_vetor(vetor14, k*N, "entrada_questao14.txt");
+
+	//Questao14a(vetor,N,k);
+	Questao14b(vetor14,N,k);
+	imprimir_vetor(vetor14, k*N, "saida_questao14.txt");
+	cout << "<Questao14> Ok: ver arquivo saida_questao14.txt" << endl;
+	delete [] vetor14;
+
+
+
+	cout<<"-------------------------------------------------------------\n";
+	cout<<"---------------- QUESTAO 16 ---------------------------------\n";
+	cout<<"-------------------------------------------------------------\n";
+	cout<<endl;
+	N = 1000; //N=1002;
+	double prob = 1.0/3;
+	int* vetor16 = new int [N];
+	for (i=0; i<N; i++) vetor16[i] = 11 + i%3;
+	int pop = Questao16(vetor16, N, prob);
+	if (pop<0) cout<<"<Questao16> NAO tem popular"<<endl;
+	else cout<<"<Questao16> Tem popular = "<<pop<<endl;
+	delete [] vetor16;
+
+
+	cout<<"-------------------------------------------------------------\n";
+	cout<<"---------------- QUESTAO 17 ----------------------------------\n";
+	cout<<"-------------------------------------------------------------\n";
+	cout<<endl;
+	N = 1000;
+	int K=100;
+	double* vetor17 = new double [N];
+	for (i=0; i<N; i++) vetor17[i] = (double) K * rand()/RAND_MAX;
+	double relax = 0.1; // A[i]<A[i+1]+relax //relax > 0
+	Questao17(vetor17, N, K, relax);
+	imprimir_vetor2(vetor17, N, "saida_questao17.txt");
+	delete [] vetor17;
+	cout<<"<Questao17> ver arquivo saida_questao17.txt"<<endl;
+
+
+	return 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+// ------------------------------------------------------------------------------------------------
+// ----- QUESTAO 4 --------------------------------------------------------------------------------
+// ------------------------------------------------------------------------------------------------
+//Considere o algoritmo {\sc NumRecursivo}$(N)$ abaixo. Determine o valor retornado em notação assintótica.
+
+void Questao4(int N) {
+    if (N<=1) return;
+    intQuestao4 += N;
+    Questao4(N/5);
+    Questao4(N/5);
+    Questao4(N/6);
+    Questao4(N/6);
+    Questao4(N/6);
+    Questao4(N/10);
+}
+
+// ------------------------------------------------------------------------------------------------
+// ----- QUESTAO 6 --------------------------------------------------------------------------------
+// ------------------------------------------------------------------------------------------------
+//Considere vetores que satisfazem a propriedade: o subvetor dos índices ímpares está ordenado crescentemente e o dos índices pares está ordenado decrescentemente.
+//Exemplo: A=[1 50 2 40 3 30 4 20 5 10]. Faça um algoritmo de tempo $O(\log n)$ que receba um vetor desse tipo e um inteiro $x$, e informe se $x$ está no vetor, retornando sua posição, se for o caso.
+
+void trocar(int& x, int& y) {int z = x; x = y; y = z;}
+
+int Questao6busca(int* vetor, int elemento, int N) {
+    int p,q,r;
+
+    // Busca Binária nas posicoes impares (ordenado crescentemente)
+    p=1; r=(N+1)/2;
+    while (p<=r) {
+        int q = (p+r)/2;
+        if (vetor[2*q-1]< elemento) p = q+1; else
+        if (vetor[2*q-1]> elemento) r = q-1; else
+        if (vetor[2*q-1]==elemento) return 2*q-1;
+    }
+    // Busca Binária (invertida) nas posicoes pares (ordenado decrescentemente)
+    p=1; r=N/2;
+    while (p<=r) {
+        int q = (p+r)/2;
+        if (vetor[2*q]> elemento) p = q+1; else
+        if (vetor[2*q]< elemento) r = q-1; else
+        if (vetor[2*q]==elemento) return 2*q;
+    }
+    return -1;
+}
+
+void Questao6(int N) {
+	int* vetor = new int [N+1];
+	for (int i=1; i<=N; i+=2) vetor[i] = i;
+	for (int i=2; i<=N; i+=2) vetor[i] = N-i+2 -N%2;
+	cout<<"Vetor[1..."<<N<<"] = (";
+	for (int i=1; i<=N; i++) cout<<vetor[i]<<" ";
+	cout<<")\n\n";
+
+	int elemento = 7;
+	int q = Questao6busca(vetor, elemento, N);
+	if (q<0) cout<<"Elemento "<<elemento<<" nao encontrado\n";
+	else cout<<"Elemento "<<elemento<<" encontrado na posicao "<<q<<"\n";
+
+	elemento = 14;
+	q = Questao6busca(vetor, elemento, N);
+	if (q<0) cout<<"Elemento "<<elemento<<" nao encontrado\n";
+	else cout<<"Elemento "<<elemento<<" encontrado na posicao "<<q<<"\n";
+
+	elemento = 21;
+	q = Questao6busca(vetor, elemento, N);
+	if (q<0) cout<<"Elemento "<<elemento<<" nao encontrado\n\n";
+	else cout<<"Elemento "<<elemento<<" encontrado na posicao "<<q<<"\n\n";
+
+	delete[] vetor;
+}
+
+// ------------------------------------------------------------------------------------------------
+// ----- QUESTAO 7 --------------------------------------------------------------------------------
+// ------------------------------------------------------------------------------------------------
+//Sobre o algoritmo HeapSort faça o que se pede. {\bf(a)} Reescreva-o em pseudo-código para receber como entrada um vetor $A$ e índices $p<r$ e ordenar o subvetor $A[p,\ldots,r]$. {\bf(b)} Altere-o para utilizar um heap {\bf mínimo} enraizado na última posição do vetor $A$, ao invés de um heap máximo enraizado na primeira posição.
+
+// Usa heap mínimo enraizado na última posição do vetor, considerando o vetor da posição p até a posição r
+void min_heapify(int* vetor, int i, int p, int r) {
+    int m = i;
+    int esq = 2*i-r-1;
+    int dir = esq-1;
+    if ((esq>=p)&&(vetor[esq]<vetor[i])) m = esq;
+    if ((dir>=p)&&(vetor[dir]<vetor[m])) m = dir;
+    if (m != i) {
+        trocar(vetor[i], vetor[m]);
+        min_heapify(vetor,m,p,r);
+    }
+}
+
+void HeapSort_min(int* vetor, int p, int r) {
+    int i;
+    for (i=(r+p+2)/2; i<=r; i++) {
+        min_heapify(vetor,i,p,r);
+    }
+    for (i=p;i<r;i++) {
+        trocar(vetor[r], vetor[i]);
+        p = p+1;
+        min_heapify(vetor,r,p,r);
+    }
+}
+
+void Questao7(int N) {
+	int* vetor = new int [N];
+	srand(time(NULL));
+	cout<<"Vetor original: ";
+	for (int i = 0; i<N; i++) {
+        vetor[i] = rand() % 1000;
+        cout<<vetor[i]<<" ";
+	}
+	cout<<"\n\n";
+	cout<<"Vetor ordenado: ";
+	HeapSort_min(vetor,0,N-1);
+	for (int i = 0; i<N; i++) cout<<vetor[i]<<" ";
+	cout<<"\n\n";
+	delete[] vetor;
+}
+
+// ------------------------------------------------------------------------------------------------
+// ----- QUESTAO 9 --------------------------------------------------------------------------------
+// ------------------------------------------------------------------------------------------------
+//Seja $X[1\ldots n]$ um vetor qualquer (os elementos desse vetor não são necessariamente inteiros ou caracteres; podem ser objetos quaisquer, como frutas ou arquivos executáveis). Suponha que você possui apenas um operador ``$=$'' que permite comparar se um objeto é igual a outro. Dizemos que $X$ tem um elemento {\bf majoritário} $x$ se mais da metade de seus elementos são iguais a $x$. Escreva um algoritmo de tempo $\Theta(n\ \log\ n)$ que diz se $X$ possui ou não um elemento majoritário. Caso sim, devolva o seu valor. {\bf Dica:} Se $x$ é majoritário em $X$, então $x$ é majoritário na primeira ou na segunda metade de $X$ (explique porquê).
+
+int Conta(int* vetor, int p, int r, int elemento) {
+    int cont = 0;
+    for (int i=p; i<=r; i++) {
+        if (vetor[i]==elemento) cont++;
+    }
+    return cont;
+}
+
+int Questao9(int* vetor, int p, int r) {
+    if (p==r) return vetor[p];
+    int q = (p+r)/2;
+    int x1 = Questao9(vetor,p,q);
+    int x2 = Questao9(vetor,q+1,r);
+
+    int N1=-1; int N2=-1;
+    if (x1>=0) N1 = Conta(vetor,p,r,x1);
+    if (x2>=0) N2 = Conta(vetor,p,r,x2);
+    if (N1 > (r-p+1)/2) return x1;
+    if (N2 > (r-p+1)/2) return x2;
+    return -1;
+}
+
+// ------------------------------------------------------------------------------------------------
+// ----- QUESTAO 10 -------------------------------------------------------------------------------
+// ------------------------------------------------------------------------------------------------
+//Sejam $X[1\ldots n]$ e $Y[1\ldots n]$ dois vetores ordenados. Escreva um algoritmo $\Theta(\log\ n)$ para encontrar a mediana de todos os $2n$ elementos nos vetores $X$ e $Y$. Prove esta complexidade.
+
+int Questao10(int* vetor1, int* vetor2, int p1, int r1, int p2, int r2) {
+    if ((r1-p1<=1)&&(r2-p2<=1)) {
+        int n = r1-p1+1 + r2-p2+1;
+        int* aux = new int[n];
+        int j=0;
+        for (int i=p1; i<=r1; i++) aux[j++] = vetor1[i];
+        for (int i=p2; i<=r2; i++) aux[j++] = vetor2[i];
+        InsertionSort(aux,0,n-1);
+        int med = aux[n/2];
+        delete[] aux;
+        return med;
+    }
+
+    int q1 = (p1+r1)/2;
+    int q2 = (p2+r2)/2;
+    int med1 = vetor1[q1];
+    int med2 = vetor2[q2];
+
+    if (med1==med2) return med1;
+    if (med1<med2)
+        return Questao10(vetor1, vetor2,q1,r1,p2,q2);
+    else
+        return Questao10(vetor1, vetor2,p1,q1,q2,r2);
+}
+
+// ------------------------------------------------------------------------------------------------
+// ----- QUESTAO 11 --------------------------------------------------------------------------------
+// ------------------------------------------------------------------------------------------------
+//Faça um algoritmo de tempo $\Theta(n\log n)$ para resolver o seguinte problema: dado um vetor com $n$ números inteiros positivos e um outro número inteiro positivo $x$, determine se existem ou não dois elementos cuja soma é igual a $x$.
+
+void Questao11(int* vetor, int n, int x) {
+    HeapSort(vetor,0,n-1);
+    int i, q=-1;
+    for (i=0; i<n; i++) {
+        q = Busca_Binaria(vetor, x-vetor[i], 0, n-1);
+        if (q>=0) break;
+    }
+    if (q<0) cout<<"<Questao11> NAO existem elementos com soma = "<<x<<endl;
+    else cout<<"<Questao11> Existem os elementos: "<<vetor[i]<<"+"<<vetor[q]<<" = "<<x<<endl;
+}
+
+// ------------------------------------------------------------------------------------------------
+// ----- QUESTAO 12 -------------------------------------------------------------------------------
+// ------------------------------------------------------------------------------------------------
+//Seja $X[1\ldots n]$ um vetor de inteiros. Dados $i<j$ em $\{1,\ldots,n\}$, dizemos que $(i,j)$ é uma inversão de $X$ se $X[i]>X[j]$. Escreva um algoritmo $\Theta(n\ log\ n)$ que devolva o número de inversões em um vetor $X$. {\bf Dica:} Tenta fazer essa contagem enquanto ordena o vetor no Merge-Sort.
+
+int Merge_cont(int* vetor, int p, int q, int r) {
+    int infinito = INT_MAX;
+    int N1 = q-p+1;
+    int N2 = r-q;
+    int* esq = new int [N1+1];
+    int* dir = new int[N2+1];
+    for (int i=0; i<N1; i++) esq[i]=vetor[p+i];
+    for (int j=0; j<N2; j++) dir[j]=vetor[q+j+1];
+    esq[N1] = infinito;
+    dir[N2] = infinito;
+
+    int i=0; int j=0;
+    int cont = 0;
+    for (int k=p; k<=r; k++) {
+        if (esq[i]<=dir[j]) {
+            vetor[k] = esq[i++];
+            cont += j;
+        } else {
+            vetor[k] = dir[j++];
+        }
+    }
+    delete[] esq;
+    delete[] dir;
+    return cont;
+}
+
+int Questao12(int* vetor, int p, int r) {
+    if (p>=r) return 0;
+    int q = (p+r)/2;
+    int cont1 = Questao12(vetor,p,q);
+    int cont2 = Questao12(vetor,q+1,r);
+    int cont3 = Merge_cont(vetor,p,q,r);
+    return cont1 + cont2 + cont3;
+}
+
+// ------------------------------------------------------------------------------------------------
+// ----- QUESTAO 14 -------------------------------------------------------------------------------
+// ------------------------------------------------------------------------------------------------
+//Suponha que você tem $k$ vetores ordenados de tamanho $n$ e deseja combiná-los em um único vetor ordenado de tamanho $kn$. {\bf(a)} Uma ideia é usar o algoritmo {\sc Intercala}, intercalando o primeiro e o segundo, depois intercalando o resultado com o terceiro, depois com o quarto e etc... Qual a complexidade desse procedimento em termos de $k$ e $n$? {\bf(b)} Mostre uma solução mais eficiente usando divisão e conquista.
+
+void Merge(int* vetor, int p, int q, int r) {
+    int infinito = INT_MAX;
+    int N1 = q-p+1;
+    int N2 = r-q;
+    int* esq = new int [N1+1];
+    int* dir = new int[N2+1];
+    for (int i=0; i<N1; i++) esq[i]=vetor[p+i];
+    for (int j=0; j<N2; j++) dir[j]=vetor[q+j+1];
+    esq[N1] = infinito;
+    dir[N2] = infinito;
+
+    int i=0;
+    int j=0;
+    for (int k=p; k<=r; k++) {
+        if (esq[i]<=dir[j])
+             vetor[k] = esq[i++];
+        else vetor[k] = dir[j++];
+    }
+    delete[] esq;
+    delete[] dir;
+}
+
+void Questao14a(int* vetor, int n, int k) {
+    for (int i=1; i<k; i++) {
+        Merge(vetor, 0, i*n-1, (i+1)*n-1);
+    }
+}
+
+void Questao14b(int* vetor, int n, int k) {
+    int tam = k*n;
+    while (k>1) {
+        int i=0;
+        while (i+2 <= k) {
+            Merge(vetor, i*n, (i+1)*n-1, min((i+2)*n-1, tam));
+            i = i + 2;
+        }
+        k = ceil(k/2.0);
+        n = 2*n;
+    }
+}
+
+// ------------------------------------------------------------------------------------------------
+// ----- QUESTAO 16 -------------------------------------------------------------------------------
+// ------------------------------------------------------------------------------------------------
+//Seja $X[1\ldots n]$ um vetor de {\bf números reais}. Dizemos que $X$ tem um elemento {\bf popular} $x$ se mais de {\bf um terço} de seus elementos são iguais a $x$. Escreva um algoritmo de tempo linear $\Theta(n)$ que diz se $X$ possui ou não um elemento popular. Caso sim, devolva o seu valor. {\bf Dica:} Use o algoritmo de Seleção do k-ésimo mínimo de tempo linear no pior caso.
+
+int Questao16(int* vetor, int N, double prob) {
+    int k = ceil(1.0/prob);
+    for (int i=1; i<k; i++) {
+        int candidato = Selecao(vetor,0,N-1,i*N/k);
+        int cont = Conta(vetor, 0, N-1, candidato);
+        if (cont>prob*N) return candidato;
+    }
+    return -1;
+}
+
+// ------------------------------------------------------------------------------------------------
+// ----- QUESTAO 17 -------------------------------------------------------------------------------
+// ------------------------------------------------------------------------------------------------
+//Dizemos que um algoritmo é de {\bf quase-ordenação} se, para qualquer vetor $A[1\ldots n]$, o algoritmo rearranja os valores do vetor $A$ de modo que $i<j$ implica $A[i]<A[j]+0.1$. Por exemplo, o vetor $A=[1.5\ 1.45\ 2.4\ 2.35\ 3]$ está quase-ordenado. Sabendo que os valores do vetor de entrada são números reais menores que 100, faça um algoritmo de tempo $O(n)$ para quase-ordenar o vetor.
+
+void Questao17(double* vetor, int N, int K, double relax) {
+    for (int i=0; i<N; i++) vetor[i] /= relax;
+    K /= relax;
+    CountingSort(vetor, N, K);
+    for (int i=0; i<N; i++) vetor[i] *= relax;
+}
+
+
+
+
+
+
+
+
+// ------------------------------------------------------------------------------------------------
+// ---- ALGORITMOS AUXILIARES ---------------------------------------------------------------------
+// ------------------------------------------------------------------------------------------------
+
+
+// --- INSERTION_SORT ------------------------
+void InsertionSort(int* vetor, int p, int r) {
+    int i,j,carta;
+    for (j=p+1;j<=r;j++) {
+        carta = vetor[j];
+        i = j-1;
+        while ((i>=p)&&(vetor[i]>carta)) {
+            vetor[i+1] = vetor[i];
+            i--;
+        }
+        vetor[i+1] = carta;
+    }
+}
+
+// --- HEAP_SORT -------------------------------------
+void maxheapify(int* vetor, int i, int p, int r) {
+    int m = i;
+    int esq = p+2*(i-p)+1;
+    int dir = p+2*(i-p)+2;
+    if ((esq<=r)&&(vetor[esq]>vetor[i])) m = esq;
+    if ((dir<=r)&&(vetor[dir]>vetor[m])) m = dir;
+    if (m != i) {
+        trocar(vetor[i], vetor[m]);
+        maxheapify(vetor,m,p,r);
+    }
+}
+
+void HeapSort(int* vetor, int p, int r) {
+    int i;
+    for (i=(r+p-1)/2; i>=p; i--) {
+        maxheapify(vetor,i,p,r);
+    }
+    for (i=r;i>p;i--) {
+        trocar(vetor[p], vetor[i]);
+        r = r-1;
+        maxheapify(vetor,p,p,r);
+    }
+}
+
+// --- Busca_Binaria --------------------------------------
+int Busca_Binaria(int* vetor, int elemento, int p, int r) {
+    while (p<=r) {
+        int q = (p+r)/2;
+        if (vetor[q]< elemento) p = q+1; else
+        if (vetor[q]> elemento) r = q-1; else
+        if (vetor[q]==elemento) return q;
+    }
+    return -1;
+}
+
+// --- Algoritmo PARTICIONE ------------------------
+int Particione(int* vetor, int p, int r, int pivo) {
+    int j, i=p-1;
+    for (j=p; j<r; j++) {
+        if (vetor[j] < pivo) {
+            i++;
+            trocar(vetor[i], vetor[j]);
+        } else if (vetor[j]==pivo) {
+            trocar(vetor[j], vetor[r]);
+            break;
+        }
+    }
+    for (j=j; j<r; j++) {
+        if (vetor[j] <= pivo) {
+            i++;
+            trocar(vetor[i], vetor[j]);
+        }
+    }
+    trocar(vetor[i+1], vetor[r]);
+    return i+1;
+}
+
+// --- Algoritmo SELECAO -----------------
+int Selecao(int* A, int p, int r, int k) {
+    int i, N=r-p+1;
+    if (N<10) {
+        if (k>N) k=N;
+        InsertionSort(A,p,r);
+        return A[p+k-1];
+    }
+    int tam_M = N/5;
+    int* M = new int[tam_M];
+    for (i=0; i<tam_M; i++) {
+        InsertionSort(A, p+5*i, p+5*i+4);
+        M[i] = A[p+5*i+2];
+    }
+    int pivo = Selecao(M, 0, tam_M-1, tam_M/2);
+    delete[] M;
+    int q = Particione(A, p, r, pivo);
+    i = q-p+1;
+    if (k==i) return A[q];
+    if (k<i) return Selecao(A,p,q-1,k);
+    return Selecao(A,q+1,r,k-i);
+}
+
+// ---- COUNTING-SORT --------------------------------
+void CountingSort(double* A, int N, int K) {
+    int i,j;
+    double* B = new double[N];
+    int* C = new int[K+1];
+    for (i=0; i<=K; i++) C[i] = 0;
+    for (j=0; j<N; j++) C[(int)A[j]]++;
+    for (i=1; i<=K; i++) C[i] = C[i]+C[i-1];
+    for (j=N-1; j>=0; j--) B[--C[(int)A[j]]] = A[j];
+    for (j=0; j<N; j++) A[j] = B[j];
+    delete[] B;
+    delete[] C;
+}
+
+
+// --- Imprimir vetor em arquivo ------------------------
+void imprimir_vetor(int* vetor, int N, string filename) {
+    if (filename=="") filename="saida.txt";
+    ofstream arq;
+    arq.open(filename.c_str());
+    for (int i=0;i<N;i++) arq<<vetor[i]<<" ";
+    arq.close();
+}
+
+// --- Imprimir vetor em arquivo ------------------------
+void imprimir_vetor2(double* vetor, int N, string filename) {
+    if (filename=="") filename="saida.txt";
+    ofstream arq;
+    arq.open(filename.c_str());
+    for (int i=0;i<N;i++) arq<<vetor[i]<<" ";
+    arq.close();
+}
+

@@ -1,0 +1,100 @@
+Descrição: q é um ponteiro, n é um inteiro, maximo é um booleano, maior, menor e i são inteiros.
+
+procedimento maxMin (q, n, maximo)
+    se maximo entao
+        maior <- 0
+	para i de 1 até n faça
+	    se q[maior] < q[i] maior <- i
+	retorna maior
+    senao
+        menor <- 0
+	para i de 1 ate n faça
+	    se q[menor] > 1[i] menor <- i
+        retorna menor
+
+
+Dewcrição: i, j e qual são inteiros. x é um ponteiro double, oper é um ponteiro string, k1 e k2 são ponteiros float. 
+procedimento printParenteses(i, j, x, oper, k1, k2, qual)
+     se i = j entao
+        imprime x[i] e
+        retorna
+     se qual = 1 entao k <- k1[i][j] senao k <- k2[i][j]
+     flag <- 10*(k-(int)k) ; oper <- oper[(int)k]
+     imprime "("
+     se flag = 0 ou flag = 1
+        printParenteses(i, k, x, oper, k1, k2, 1)
+     senao
+        printParenteses(i, k, x, oper, k1, k2, 2)
+     imprime oper
+     se flag = 0 ou flag = 2
+          printParenteses(k+1, j, x, oper, k1, k2, 1)
+     senao 
+          printParenteses(K+1, j, x, oper, k1, k2, 2)
+     imprime ")"
+
+
+Descrição: x é um ponteiro, oper é uma string, N é inteiro. São também inteiros: i,j,k,l, r_min e r_max.
+c_min, c_max, min1, min1, max1 e max2 são double, k_min e k_max são float
+
+procedimento questaoExtra (x, oper, N)
+    Para i de 0 ate N
+	c_min[i] <- criar[N]
+
+    Para i de 0 ate N
+	c_max[i] <- criar[N]
+
+    Para i de 0 ate N
+	K_min[i] <- criar[N]    
+
+    Para i de 0 ate N
+	K_max[i] <- criar[N]  
+
+    Para i de 0 ate N
+	c_min[i][i] <- x[i]
+
+    para l de 2 até N faça
+	para i de 0 ate N+1-1 faça
+            j <- i+1-1
+	    c_min[i][j] <- doubleMax
+	    c_mac[i][j] <- -doubleMax
+            q <- q[4]
+	    para k de i ate j
+	        min1 <- c_min[i][k]
+		max1 <- c_max[i][k]
+	        min2 <- c_min[k+1][j]
+		max2 <- c_max[k+1][j]
+		se oper[k] = '+' entao 
+		    q[0] <- min1 + min2; q[3] <- max1 + max2;
+                    r_min <- 0; r_max <- 3
+		se oper[k] = '-' entao
+		    q[1] <- min1 - max2; q[2] <- max1 - min2;
+                     r_min <- 1; r_max <- 2
+		se oper[k] = '*' entao
+		    q[0] <- min1 * min2;
+                    q[1] <- min1 * max2;
+                    q[2] <- max1 * min2;
+                    q[3] <- max1 * max2;
+                    r_min <- maxmin(q,4,0);
+                    r_max <- maxmin(q,4,1);
+		se oper[k] = '/' entao
+		    se min2 != 0 entao q[0] <- min1/min2 senao se min1 > 0 entao q[0] <- doubleMax senao q[0] <- -doubleMax
+		    se max2 != 0 entao q[1] <- min1/max2 senao se min1 > 0 entao q[1] <- doubleMax senao q[1] <- -doubleMax
+		    se min2 != 0 entao q[2] <- max1/min2 senao se max1 > 0 entao q[2] <- doubleMax senao q[2] <- -doubleMax
+		    se max2 != 0 entao q[3] <- max1/min2 senao se max1 > 0 entao q[3] <- doubleMax senao q[3] <- -doubleMax
+		    r_min <- maxMin(q, 4, 0)
+		    r_max <- maxMin(q, 4, 1)
+
+		se oper[k] = '^' entao
+		    se min1 != 0 e min2 != 0 entap q[0] <- pow(min1, min2) senao q[0] <- 1
+		    se min1 != 0 e min2 != 0 entap q[1] <- pow(min1, min2) senao q[1] <- 1
+		    se min1 != 0 e min2 != 0 entap q[2] <- pow(min1, min2) senao q[2] <- 1
+		    se min1 != 0 e min2 != 0 entap q[3] <- pow(min1, min2) senao q[3] <- 1
+		    r_min <- maxMin(q, 4, 0)
+		    r_max <- maxMin(q, 4, 1)
+		se q[r_min] < c_min[i][j] entao
+		    c_min[i][j] <- q[r_min]; k_min[i][j] <- k+r_min/10
+		se q[r_max] > c_mac[i][j] entao
+		    c_max[i][j] <- q[r_max]; k_max[i][j] <- k+r_max/10
+
+
+     Tempo: O (n^3) // Estimativa

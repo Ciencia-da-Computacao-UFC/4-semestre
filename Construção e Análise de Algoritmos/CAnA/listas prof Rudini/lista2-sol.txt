@@ -1,0 +1,648 @@
+#include <iostream>
+#include <fstream>
+#include <cmath>
+#include <ctime>
+#include <climits>
+#include <cfloat>
+#include <sstream>
+#include <string>
+#include <windows.h>
+using namespace std;
+
+
+// QUESTOES (algoritmos principais)
+unsigned int Questao1(int N, char item, unsigned int* vet);
+double Questao2(double* S, int N);
+void Questao3(string S);
+int Questao4(string S);
+void Questao5(int* numero, int N, int T);
+void Questao6(double* x, char* op, int N);
+void Questao10(int* prazo, int* multa, int N);
+
+
+void imprime_matriz(double** s, int N);
+
+// -------------------------------------------------------------
+// --- MAIN ----------------------------------------------------
+// -------------------------------------------------------------
+int main() {
+
+	unsigned int t1, t2, x;
+	// Para executar a questao, coloque 1 no vetor abaixo
+	// QUESTAO --------- 1 2 3 4 5 6 7 8 9 10
+	int questao[11] = {0,1,0,0,0,0,0,0,0,0,0};
+	//int questao[11] = {1,1,1,1,1,1,1,1,1,1,1};
+
+    if (questao[1])
+    {
+        cout<<"---------------------------------------------"<<endl;
+        cout<<"---------------- QUESTAO 1 ------------------"<<endl;
+        cout<<"---------------------------------------------"<<endl;
+        int N = 1000000;
+        t1 = GetTickCount();
+        x = Questao1(N, 'b', NULL);
+        t2 = GetTickCount();
+        cout<<"Questao 1b (N="<<N<<"): "<<x<<" (miliseg "<<t2-t1<<")"<<endl;
+        t1 = t2;
+        x = Questao1(N, 'c', NULL);
+        t2 = GetTickCount();
+        cout<<"Questao 1c (N="<<N<<"): "<<x<<" (miliseg "<<t2-t1<<")"<<endl;
+        t1 = t2;
+        x = Questao1(N, 'a', NULL);
+        t2 = GetTickCount();
+        cout<<"Questao 1a (N="<<N<<"): "<<x<<" (miliseg "<<t2-t1<<")"<<endl;
+        cout<<endl;
+
+        N = 200000000;
+        t1 = GetTickCount();
+        x = Questao1(N, 'b', NULL);
+        t2 = GetTickCount();
+        cout<<"Questao 1b (N="<<N<<"): "<<x<<" (miliseg "<<t2-t1<<")"<<endl;
+        t1 = t2;
+        x = Questao1(N, 'c', NULL);
+        t2 = GetTickCount();
+        cout<<"Questao 1c (N="<<N<<"): "<<x<<" (miliseg "<<t2-t1<<")"<<endl;
+        cout<<endl;
+    }
+
+    if (questao[2])
+    {
+        cout<<"---------------------------------------------"<<endl;
+        cout<<"---------------- QUESTAO 2 ------------------"<<endl;
+        cout<<"---------------------------------------------"<<endl;
+        const int N = 10;
+        double S[N] = {5, 15, -30, 10, -5, 40, 10, -30, 5, -40};
+
+        cout << "Sequencia de entrada: " << endl;
+        for (int i=0; i<N; i++) cout << S[i] << "  ";
+        cout << endl << endl;
+        cout << "Soma maxima de uma subsequencia contigua: " << endl << Questao2(S,N) << endl;
+    }
+
+    if (questao[3])
+    {
+        cout<<"---------------------------------------------"<<endl;
+        cout<<"---------------- QUESTAO 3 ------------------"<<endl;
+        cout<<"---------------------------------------------"<<endl;
+        string S = "125271448164";
+        cout << "Sequencia de entrada: " << endl << S << endl << endl;
+        Questao3(S);
+
+        cout << endl << endl << endl;
+        S = "133121974913";
+        cout << "Sequencia de entrada: " << endl << S << endl << endl;
+        Questao3(S);
+    }
+
+    if (questao[4])
+    {
+        cout<<"---------------------------------------------"<<endl;
+        cout<<"---------------- QUESTAO 4 ------------------"<<endl;
+        cout<<"---------------------------------------------"<<endl;
+        string S = "ACGTGTCAAAATCG";
+        cout << "Sequencia de entrada: " << endl << S << endl << endl;
+        cout << "Tamanho: " << Questao4(S) << endl;
+        cout << endl << endl << endl;
+
+        S = "SaObCcOdReRfAgMh iMjEk lSmUnBoIp_qNrO OuNv_wIxByUzS0 1E2M3 4M5A6R7R8O9C!O@S#";
+        cout << "Sequencia de entrada: " << endl << S << endl << endl;
+        cout << "Tamanho: " << Questao4(S) << endl << endl;
+    }
+
+    if (questao[5])
+    {
+        cout<<"---------------------------------------------"<<endl;
+        cout<<"---------------- QUESTAO 5 ------------------"<<endl;
+        cout<<"---------------------------------------------"<<endl;
+        const int N = 5;
+        int numero[N] = {1,2,4,8,16};
+        cout<<"Sequencia de entrada: ";
+        for (int i=1; i<=N; i++) {
+            cout << numero[i-1] << " ";
+        }
+        cout<<endl;
+
+        for (int T=0; T<=35; T++) {
+            Questao5(numero,N,T);
+            cout<<endl;
+        }
+    }
+
+    if (questao[6])
+    {
+        cout<<"---------------------------------------------"<<endl;
+        cout<<"---------------- QUESTAO 6 ------------------"<<endl;
+        cout<<"---------------------------------------------"<<endl;
+        const int N = 5;
+        double x[N] = {0.3, 1, 4, 0.7, 0.2};
+        char* op = "+*+*";
+
+        Questao6(x, op, N);
+    }
+
+    if (questao[7])
+    {
+        cout<<"---------------------------------------------"<<endl;
+        cout<<"---------------- QUESTAO 7 ------------------"<<endl;
+        cout<<"---------------------------------------------"<<endl;
+
+        cout << endl;
+    }
+
+    if (questao[8])
+    {
+        cout<<"---------------------------------------------"<<endl;
+        cout<<"---------------- QUESTAO 8 ------------------"<<endl;
+        cout<<"---------------------------------------------"<<endl;
+
+        cout << endl;
+    }
+
+    if (questao[9])
+    {
+        cout<<"---------------------------------------------"<<endl;
+        cout<<"---------------- QUESTAO 9 ------------------"<<endl;
+        cout<<"---------------------------------------------"<<endl;
+
+        cout << endl;
+    }
+
+    if (questao[10])
+    {
+        cout<<"---------------------------------------------"<<endl;
+        cout<<"---------------- QUESTAO 10 -----------------"<<endl;
+        cout<<"---------------------------------------------"<<endl;
+        const int N = 8;
+        int prazo[N] = {6,4,3,3,4,2,4,0};
+        int multa[N] = {10, 20, 30, 40, 50, 60, 70, 80};
+        //int prazo[N] = {0, 4, 2, 4, 3, 3, 4, 6}; // Começa em 0
+        //int multa[N] = {80, 70, 60, 50, 40, 30, 20, 10};
+
+        Questao10(prazo, multa, N);
+
+        cout << endl;
+    }
+
+	return 0;
+}
+
+
+// ----------------------------------------------------------------------
+// ---- QUESTOES (algoritmos principais) --------------------------------
+// ----------------------------------------------------------------------
+
+
+// ------------------------------------------
+// ---- QUESTAO 1 ---------------------------
+// ------------------------------------------
+unsigned int Questao1(int N, char item, unsigned int* vet)
+{
+    if (item=='a') {
+        if (N<=4) return 0;
+        unsigned int x1 = Questao1(N/2 +0, 'a', NULL);
+        unsigned int x2 = Questao1(N/2 +1, 'a', NULL);
+        unsigned int x3 = Questao1(N/2 +2, 'a', NULL);
+        return x1 + x2 + x3 + N;
+    }
+
+    if (item=='b') {
+        vet = new unsigned int[N+1];
+        vet[0]=vet[1]=vet[2]=vet[3]=vet[4]=0;
+        for (int i=5; i<=N; i++) {
+            unsigned int x1 = vet[i/2 +0];
+            unsigned int x2 = vet[i/2 +1];
+            unsigned int x3 = vet[i/2 +2];
+            vet[i] = x1 + x2 + x3 + i;
+        }
+        unsigned int x = vet[N];
+        delete vet;
+        return x;
+    }
+
+    if (item=='c') {
+        if (vet==NULL) {
+            vet = new unsigned int[N+1]();
+            vet[0]=vet[1]=vet[2]=vet[3]=vet[4]=0;
+            unsigned int x = Questao1(N, 'c', vet);
+            delete vet;
+            return x;
+        } else {
+            if ((N<5)||(vet[N]>0)) return vet[N];
+            unsigned int x1 = Questao1(N/2 +0, 'c', vet);
+            unsigned int x2 = Questao1(N/2 +1, 'c', vet);
+            unsigned int x3 = Questao1(N/2 +2, 'c', vet);
+            vet[N] = x1 + x2 + x3 + N;
+            return vet[N];
+        }
+    }
+    return 0;
+}
+
+// ------------------------------------------
+// ---- QUESTAO 2 ---------------------------
+// ------------------------------------------
+double Questao2(double* S, int N) {
+    double* soma = new double[N+1];
+    soma[0] = 0;
+    for (int i=1; i<=N; i++) {
+        soma[i] = soma[i-1] + S[i-1];
+        if (soma[i]<0) soma[i]=0;
+    }
+    cout << "Somas maximas de subsequencias contiguas terminadas em uma posicao:" << endl;
+    int r_s=0;
+    int r_i=0;
+    for (int i=1; i<=N; i++) {
+        cout << soma[i] << "  ";
+        if (r_s < soma[i]) {
+            r_i = i;
+            r_s = soma[r_i];
+        }
+    }
+    cout << endl << endl << "Subsequencia contigua de soma maxima: " << endl;
+    if (r_i<=0) cout << "VAZIO" <<endl;
+    else {
+        int r_j = r_i;
+        while ((r_j>=0)&&(soma[r_j]>0)) r_j--;
+        if (r_j==r_i) cout << "VAZIO" <<endl;
+        else for (int k=r_j+1; k<=r_i; k++) cout << S[k-1] << "  ";
+    }
+    cout << endl << endl;
+    delete[] soma;
+    return r_s;
+}
+
+// ------------------------------------------
+// ---- QUESTAO 3 ---------------------------
+// ------------------------------------------
+bool quad_cubo(string S, int i, int j, string& saida)
+{
+    string palavra = S.substr(i,j-i+1);
+    long numero = atol(palavra.c_str());
+    double raiz2 = pow(numero,1.0/2);
+    double raiz3 = pow(numero,1.0/3);
+    if (abs(raiz2-round(raiz2))<=0.00000001) {
+        stringstream str_raiz2;
+        str_raiz2 << (int)round(raiz2);
+        saida = str_raiz2.str() + "^2";
+        return true;
+    }
+    if (abs(raiz3-round(raiz3))<=0.00000001) {
+        ostringstream str_raiz3;
+        str_raiz3 << (int)round(raiz3);
+        saida = str_raiz3.str() + "^3";
+        return true;
+    }
+    saida = "";
+    return false;
+}
+
+void Questao3(string S)
+{
+    string saida;
+    int N = S.size();
+    bool* qc_b = new bool[N+1];
+    int* qc_k = new int[N+1];
+    qc_b[0] = true;
+    qc_k[0] = 0;
+    for (int i=1; i<=N; i++) {
+        qc_b[i] = false;
+        qc_k[i] = -1;
+        for (int k=0; k<i; k++) {
+            if ((qc_b[k]==true)&&(quad_cubo(S,k,i-1,saida))) {
+                qc_b[i] = true;
+                qc_k[i] = k;
+                break;
+            }
+        }
+    }
+
+
+    cout << "Particao em quadrados ou cubos perfeitos:" << endl;
+    if (qc_b[N]==false) cout << "IMPOSSIVEL" << endl;
+    else {
+        string particao1, particao2;
+        int k = N;
+        while (k>0) {
+            string palavra = S.substr(qc_k[k],k-qc_k[k]);
+            quad_cubo(palavra,0,palavra.size()-1,saida);
+            particao1 = palavra + " " + particao1;
+            particao2 = saida + " " + particao2;
+            k = qc_k[k];
+        }
+        cout << particao1 << endl << particao2 << endl;;
+    }
+    delete[] qc_b;
+    delete[] qc_k;
+}
+
+// ------------------------------------------
+// ---- QUESTAO 4 ---------------------------
+// ------------------------------------------
+string imprime_PALIND(int i, int j, string x, char** b)
+{
+    if (i>j) return "";
+    if (i==j) {
+        stringstream ss;
+        ss << x[i-1];
+        return ss.str();
+    }
+
+    if (b[i][j]=='/') {
+        string palind = imprime_PALIND(i+1,j-1, x, b);
+        palind = x[i-1] + palind + x[j-1];
+        return palind;
+    } else if (b[i][j]=='-') {
+        return imprime_PALIND(i,j-1, x, b);
+    } else {
+        return imprime_PALIND(i+1,j, x, b);
+    }
+}
+
+int Questao4(string S)
+{
+    int N = S.size();
+    int i,j,l;
+    int** c = new int*[N+1]; for (i=0; i<=N; i++) c[i] = new int[N+1];
+    char** b=new char*[N+1]; for (int i=0; i<=N; i++) b[i] = new char[N+1];
+
+    for (i=0; i<=N; i++) {c[i][i] = 1;}
+    for (i=1; i<=N; i++) {c[i][i-1] = 0;}
+
+    for (l=2; l<=N; l++) {
+        for (i=1; i<=N-l+1; i++) {
+            int j = i+l-1;
+            if (S[i-1]==S[j-1]) {
+                c[i][j] = c[i+1][j-1] + 2;
+                b[i][j] = '/';
+            } else if (c[i+1][j]>=c[i][j-1]) {
+                c[i][j] = c[i+1][j];
+                b[i][j] = '|';
+            } else {
+                c[i][j] = c[i][j-1];
+                b[i][j] = '-';
+            }
+        }
+    }
+    cout << "Subsequencia Palindroma Maxima: " << imprime_PALIND(1,N,S,b) << endl;
+
+    int r = c[1][N];
+    for (i=0; i<=N; i++) {delete[] b[i]; delete c[i];}
+    delete[] b;
+    delete[] c;
+
+    return r;
+}
+
+// ------------------------------------------
+// ---- QUESTAO 5 ---------------------------
+// ------------------------------------------
+void Questao5(int* numero, int N, int T) {
+    int i,t;
+    bool** S = new bool*[N+1];
+    bool** R = new bool*[N+1];
+    for (i=0; i<=N; i++) {S[i] = new bool[T+1]; R[i] = new bool[T+1];}
+    for (t=0; t<=T; t++) S[0][t] = false;
+    S[0][0] = true;
+
+    for (i=1; i<=N; i++) {
+        for (t=0; t<=T; t++) {
+            S[i][t] = S[i-1][t];
+            R[i][t] = false;
+            if (!S[i][t] && (t>=numero[i-1])) {
+                S[i][t] = S[i-1][t-numero[i-1]];
+                R[i][t] = true;
+            }
+        }
+    }
+
+    if (S[N][T])
+    {
+        cout<<"T="<<T<<": Subconjunto ";
+        t=T;
+        for (i=N; i>=1; i--) if (R[i][t]) {
+            t -= numero[i-1];
+            cout << numero[i-1] << " ";
+        }
+    }
+    else
+    {
+        cout<<"T="<<T<<": NAO existe subconjunto com essa soma";
+    }
+
+    for (i=0; i<=N; i++) {delete[] S[i]; delete[] R[i];}
+    delete[] S;
+    delete[] R;
+}
+
+// ------------------------------------------
+// ---- QUESTAO 6 ---------------------------
+// ------------------------------------------
+int maxmin(double* q, int n, bool maximo) {
+    if (maximo) {
+        int maior = 0;
+        for (int i=1; i<n; i++) {
+            if (q[maior]<q[i]) maior = i;
+        }
+        return maior;
+    } else {
+        int menor = 0;
+        for (int i=1; i<n; i++) {
+            if (q[menor]>q[i]) menor = i;
+        }
+        return menor;
+    }
+}
+
+void imprime_Parent(int i, int j, double* x, char* op, float** k1, float** k2, int qual) {
+    if (i==j) {cout<<x[i]; return;}
+
+    float k;
+    if (qual==1) k = k1[i][j]; else k = k2[i][j];
+    int flag = 10*(k-(int)k);
+    char oper = op[(int)k];
+
+    cout<<"(";
+    if ((flag==0)||(flag==1))
+        imprime_Parent(i, k, x, op, k1, k2, 1);
+    else
+        imprime_Parent(i, k, x, op, k1, k2, 2);
+
+    cout << " " << oper << " ";
+
+    if ((flag==0)||(flag==2))
+        imprime_Parent(k+1, j, x, op, k1, k2, 1);
+    else
+        imprime_Parent(k+1, j, x, op, k1, k2, 2);
+
+    cout<<")";
+}
+
+void Questao6(double* x, char* op, int N) {
+    int i,j,k,l;
+    double** c_min = new double*[N]; for (i=0; i<N; i++) c_min[i] = new double[N];
+    double** c_max = new double*[N]; for (i=0; i<N; i++) c_max[i] = new double[N];
+    float** k_min=new float*[N]; for (i=0; i<N; i++) k_min[i] = new float[N];
+    float** k_max=new float*[N]; for (i=0; i<N; i++) k_max[i] = new float[N];
+
+    for (i=0; i<N; i++) {c_min[i][i] = c_max[i][i] = x[i];}
+
+    for (l=2; l<=N; l++) {
+        for (i=0; i<N-l+1; i++) {
+            j = i+l-1;
+            c_min[i][j] = DBL_MAX;
+            c_max[i][j] =-DBL_MAX;
+            double q[4];
+            for (k=i; k<j; k++) {
+                double min1 = c_min[i][k];
+                double max1 = c_max[i][k];
+                double min2 = c_min[k+1][j];
+                double max2 = c_max[k+1][j];
+                int r_min, r_max;
+                if (op[k]=='+') {
+                    q[0] = min1 + min2;
+                    q[3] = max1 + max2;
+                    r_min = 0;
+                    r_max = 3;
+                }
+                if (op[k]=='-') {
+                    q[1] = min1 - max2;
+                    q[2] = max1 - min2;
+                    r_min = 1;
+                    r_max = 2;
+                }
+                if (op[k]=='*') {
+                    q[0] = min1 * min2;
+                    q[1] = min1 * max2;
+                    q[2] = max1 * min2;
+                    q[3] = max1 * max2;
+                    r_min = maxmin(q,4,0);
+                    r_max = maxmin(q,4,1);
+                }
+                if (op[k]=='/') {
+                    if (min2!=0) q[0]=min1/min2; else if (min1>0) q[0]=DBL_MAX; else q[0]=-DBL_MAX;
+                    if (max2!=0) q[1]=min1/max2; else if (min1>0) q[1]=DBL_MAX; else q[1]=-DBL_MAX;
+                    if (min2!=0) q[2]=max1/min2; else if (max1>0) q[2]=DBL_MAX; else q[2]=-DBL_MAX;
+                    if (max2!=0) q[3]=max1/max2; else if (max1>0) q[3]=DBL_MAX; else q[3]=-DBL_MAX;
+                    r_min = maxmin(q,4,0);
+                    r_max = maxmin(q,4,1);
+                }
+                if (op[k]=='^') {
+                    if ((min1!=0)&&(min2!=0)) q[0]=pow(min1,min2); else q[0]=1;
+                    if ((min1!=0)&&(max2!=0)) q[1]=pow(min1,max2); else q[1]=1;
+                    if ((max1!=0)&&(min2!=0)) q[2]=pow(max1,min2); else q[2]=1;
+                    if ((max1!=0)&&(max2!=0)) q[3]=pow(max1,max2); else q[3]=1;
+                    r_min = maxmin(q,4,0);
+                    r_max = maxmin(q,4,1);
+                }
+                if (q[r_min] < c_min[i][j]) {c_min[i][j]=q[r_min]; k_min[i][j] = k + r_min/10.0;}
+                if (q[r_max] > c_max[i][j]) {c_max[i][j]=q[r_max]; k_max[i][j] = k + r_max/10.0;}
+            }
+        }
+    }
+    //imprime_matriz(c_min, N); cout<<endl<<endl;
+    //imprime_matriz(c_max, N); cout<<endl<<endl;
+
+    cout<<"MINIMO = "<< c_min[0][N-1] << " === ";
+    imprime_Parent(0,N-1,x,op,k_min,k_max,1);
+    cout<<endl<<endl;
+    cout<<"MAXIMO = "<< c_max[0][N-1] << " === ";
+    imprime_Parent(0,N-1,x,op,k_min,k_max,2);
+    cout<<endl<<endl;
+
+
+
+    for (i=0; i<N; i++) {
+        delete[] c_min[i];
+        delete[] c_max[i];
+        delete[] k_min[i];
+        delete[] k_max[i];
+    }
+    delete[] c_min;
+    delete[] c_max;
+    delete[] k_min;
+    delete[] k_max;
+}
+
+// ------------------------------------------
+// ---- QUESTAO 10 --------------------------
+// ------------------------------------------
+void trocar(int& x, int& y) {int z = x; x = y; y = z;}
+
+int Particione_original(int* id, int* vetor, int p, int r) {
+    int pivo = vetor[id[r]];
+    int i=p-1;
+    for (int j=p; j<r; j++) {
+        if (vetor[id[j]] >= pivo) {
+            i++;
+            trocar(id[i], id[j]);
+        }
+    }
+    trocar(id[i+1], id[r]);
+    return i+1;
+}
+
+int Particione_aleat(int* id, int* vetor, int p, int r) {
+    srand (time(NULL));
+    int pos_pivo = p + rand()%(r-p+1);
+    trocar(id[pos_pivo], id[r]);
+    return Particione_original(id,vetor,p,r);
+}
+// ordena id decrescentemente de acordo com os valores em vetor.
+void QuickSort_Dec(int* id, int* vetor, int p, int r) {
+    if (p>=r) return;
+    int q = Particione_aleat(id,vetor,p,r);
+    QuickSort_Dec(id,vetor,p,q-1);
+    QuickSort_Dec(id,vetor,q+1,r);
+}
+
+void Questao10(int* prazo, int* multa, int N)
+{
+    int i,t;
+    int* id = new int[N];
+    int* escala = new int[N];
+    for (i=0; i<N; i++) {
+        id[i] = i;
+        escala[i] = -1;
+    }
+
+    QuickSort_Dec(id,multa,0,N-1);
+
+    cout<<endl<<"Tarefas: "; for (i=0; i<N; i++) cout<<      id[i] <<"  ";
+    cout<<endl<<"Prazos:  "; for (i=0; i<N; i++) cout<<prazo[id[i]]<<"  ";
+    cout<<endl<<"Multas: ";  for (i=0; i<N; i++) cout<<multa[id[i]]<<"  ";
+    cout<<endl;
+
+    for (i=0; i<N; i++) {
+        t = prazo[id[i]]; if (t>=N) t=N-1;
+        while ((t>=0)&&(escala[t]>=0)) t--;
+        if (t<0) {
+            t = N-1;
+            while ((t>=0)&&(escala[t]>=0)) t--;
+        }
+        escala[t] = id[i];
+    }
+
+    cout << endl << "Escala de tarefas: ";
+    int multa_total = 0;
+    for (t=0; t<N; t++) {
+        cout << escala[t] << "  ";
+        if (t > prazo[escala[t]]) multa_total += multa[escala[t]];
+    }
+    cout << endl << endl << "Multa Total = " << multa_total << endl;
+}
+
+
+
+
+
+// ------------------------------------------
+// ---- auxiliares --------------------------
+// ------------------------------------------
+void imprime_matriz(double** m, int N) {
+    int i,j;
+    for (i=0; i<N; i++) {
+        for (j=0; j<i; j++) cout<<"- ";
+        for (j=i; j<N; j++) cout<<m[i][j]<<" ";
+        cout<<endl;
+    }
+}
