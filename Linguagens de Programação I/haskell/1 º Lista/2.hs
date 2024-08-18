@@ -1,0 +1,1 @@
+palindrome :: Int -> Int -> [Int]
