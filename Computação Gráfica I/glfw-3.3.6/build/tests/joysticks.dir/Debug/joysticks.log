@@ -1,0 +1,5 @@
+﻿  Building Custom Rule C:/Users/ferna/Downloads/glfw-3.3.6/tests/CMakeLists.txt
+  joysticks.c
+  glad_gl.c
+  Gerando Código...
+  joysticks.vcxproj -> C:\Users\ferna\Downloads\glfw-3.3.6\build\tests\Debug\joysticks.exe

@@ -1,0 +1,5 @@
+﻿  Building Custom Rule C:/Users/ferna/Downloads/glfw-3.3.6/examples/CMakeLists.txt
+  simple.c
+  glad_gl.c
+  Gerando Código...
+  simple.vcxproj -> C:\Users\ferna\Downloads\glfw-3.3.6\build\examples\Debug\simple.exe

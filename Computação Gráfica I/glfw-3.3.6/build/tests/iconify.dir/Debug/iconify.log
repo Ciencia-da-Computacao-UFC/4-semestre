@@ -1,0 +1,6 @@
+﻿  Building Custom Rule C:/Users/ferna/Downloads/glfw-3.3.6/tests/CMakeLists.txt
+  iconify.c
+  getopt.c
+  glad_gl.c
+  Gerando Código...
+  iconify.vcxproj -> C:\Users\ferna\Downloads\glfw-3.3.6\build\tests\Debug\iconify.exe
